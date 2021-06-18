@@ -1,58 +1,52 @@
-import {useRouter} from "next/router";
 import Head from "next/head";
-import useSWR, {SWRResponse} from "swr";
 import PersonRequest from "../../api/person";
+import {InferGetServerSidePropsType} from "next";
 
 /**
  * Dynamic function for rendering (and routing) a person, and telling them to go to sleep.
  * @constructor
  */
-export default function Person(): JSX.Element {
-    const router = useRouter();
-
-    const {email, person} = router.query;
-
-    const {data: personData, error: personErr} = usePerson({email: email as string, who: person as string});
-
-    // Handle errors.
-    if (personErr) {
-        return (
-            <div>
-                <Head>
-                    <title>You should go to sleep..</title>
-                    <meta property="og:title" content="You should go to sleep.."/>
-                    <meta property="description" content="Seriously. Why aren't you asleep?"/>
-                    <meta property="og:description" content="Seriously. Why aren't you asleep?"/>
-                </Head>
-                <body>
-                <img src={""} alt="zzzzzzzz"/>
-                <div>
-                    Really. Something happened, and you should go to sleep anyways.
-                </div>
-                </body>
-            </div>
-        );
-    }
-
+export default function Person({data}: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
     return (
         <div>
             <Head>
-                <title>{personData?.who} should go to sleep..</title>
-                <link href={personData?.icon} rel="icon"/>
-                <meta property="og:title" content={personData?.who}/>
-                <meta property="og:image" content={personData?.icon}/>
-                <meta property="description" content={personData?.message}/>
-                <meta property="og:description" content={personData?.message}/>
+                <title>{data.who} should go to sleep..</title>
+                <link href={data.icon} rel="icon"/>
+                <meta property="og:title" content={data.who}/>
+                <meta property="og:image" content={data.icon}/>
+                <meta property="description" content={data.message}/>
+                <meta property="og:description" content={data.message}/>
             </Head>
             <div className="container grid grid-cols-1 place-items-center pb-10 m-12 mx-auto">
-                <div className="mb-4 text-4xl">{personData?.who}</div>
-                <img src={personData?.icon} alt="zzzzzzzz" className="mb-5 person-image"/>
+                <div className="mb-4 text-4xl">{data.who}</div>
+                <img src={data.icon} alt="zzzzzzzz" className="mb-5 person-image"/>
                 <div>
-                    {personData?.message}
+                    {data.message}
                 </div>
             </div>
         </div>
     );
+}
+
+/**
+ * Get props to render server side.
+ * @param params        parameters
+ */
+export const getServerSideProps = async ({params}: any) => {
+    return {
+        props: {
+            data: await getPersonData({who: params.person ?? "you", email: params.email ?? "-"})
+        }
+    };
+}
+
+/**
+ * Get person data from given request data.
+ * @param personRequest     request data
+ */
+async function getPersonData(personRequest: PersonRequest) {
+    const data = await fetch(`http://localhost:3000/api/person?email=${personRequest.email}&name=${personRequest.who}`);
+    return await data.json();
 }
 
 /**
@@ -89,13 +83,4 @@ interface PersonRequest {
      * Email of the person.
      */
     email: string;
-}
-
-/**
- * Use SWR to get person data.
- * @param person    person to request data for.
- */
-function usePerson(person: PersonRequest): SWRResponse<PersonData, any> {
-    // Cast as any to make my ide happy (????).
-    return useSWR(`/api/person?email=${person.email}&name=${person.who}` as any);
 }
