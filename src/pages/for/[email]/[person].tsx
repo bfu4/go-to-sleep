@@ -30,12 +30,13 @@ export default function Person({data}: InferGetServerSidePropsType<typeof getSer
 
 /**
  * Get props to render server side.
+ * @param req           request
  * @param params        parameters
  */
-export const getServerSideProps = async ({params}: any) => {
+export const getServerSideProps = async ({params, req}: any) => {
     return {
         props: {
-            data: await getPersonData({who: params.person ?? "you", email: params.email ?? "-"})
+            data: await getPersonData({who: params.person ?? "you", email: params.email ?? "-"}, req.headers.host)
         }
     };
 }
@@ -43,9 +44,10 @@ export const getServerSideProps = async ({params}: any) => {
 /**
  * Get person data from given request data.
  * @param personRequest     request data
+ * @param host              this host, for the api request
  */
-async function getPersonData(personRequest: PersonRequest) {
-    const data = await fetch(`http://localhost:3000/api/person?email=${personRequest.email}&name=${personRequest.who}`);
+async function getPersonData(personRequest: PersonRequest, host: string) {
+    const data = await fetch(`http://${host}/api/person?email=${personRequest.email}&name=${personRequest.who}`);
     return await data.json();
 }
 
