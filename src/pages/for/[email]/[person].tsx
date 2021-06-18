@@ -21,6 +21,9 @@ export default function Person(): JSX.Element {
             <div>
                 <Head>
                     <title>You should go to sleep..</title>
+                    <meta property="og:title" content="You should go to sleep.."/>
+                    <meta property="description" content="Seriously. Why aren't you asleep?"/>
+                    <meta property="og:description" content="Seriously. Why aren't you asleep?"/>
                 </Head>
                 <body>
                 <img src={personData?.icon} alt="zzzzzzzz"/>
@@ -39,6 +42,7 @@ export default function Person(): JSX.Element {
                 <link href={personData?.icon} rel="icon"/>
                 <meta property="og:title" content={personData?.who}/>
                 <meta property="og:image" content={personData?.icon}/>
+                <meta property="description" content={message?.message}/>
                 <meta property="og:description" content={message?.message}/>
             </Head>
             <div className="container grid grid-cols-1 place-items-center pb-10 m-12 mx-auto">
