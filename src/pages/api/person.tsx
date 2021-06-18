@@ -11,6 +11,9 @@ export default async function PersonRequest(req: NextApiRequest, res: NextApiRes
     const emailHash = createHash("md5").update(email).digest('hex');
     const gravatar = await fetch(`https://gravatar.com/${emailHash}.json`);
 
+    const message = await fetch(`http://${req.headers.host}/api/message?name=${req.query.name}`);
+    const messageJson = await message.json();
+
     if (gravatar.status == 200) {
         const json = await gravatar.json();
         const entries = json.entry as any[];
@@ -20,7 +23,8 @@ export default async function PersonRequest(req: NextApiRequest, res: NextApiRes
         // Return data.
         return res.status(200).json({
             who: req.query.name,
-            icon: photos[photos.length - 1].value
+            icon: photos[photos.length - 1].value,
+            message: messageJson.message
         });
     } else {
         // Use the waifu endpoint.
@@ -28,7 +32,8 @@ export default async function PersonRequest(req: NextApiRequest, res: NextApiRes
         const json = await waifu.json();
         return res.status(200).json({
             who: req.query.name,
-            icon: json.icon
+            icon: json.icon,
+            message: messageJson.message
         });
     }
 }

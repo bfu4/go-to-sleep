@@ -13,7 +13,6 @@ export default function Person(): JSX.Element {
     const {email, person} = router.query;
 
     const {data: personData, error: personErr} = usePerson({email: email as string, who: person as string});
-    const {data: message, error: messageError} = useMessage(person as string);
 
     // Handle errors.
     if (personErr) {
@@ -26,9 +25,9 @@ export default function Person(): JSX.Element {
                     <meta property="og:description" content="Seriously. Why aren't you asleep?"/>
                 </Head>
                 <body>
-                <img src={personData?.icon} alt="zzzzzzzz"/>
+                <img src={""} alt="zzzzzzzz"/>
                 <div>
-                    {message?.message}
+                    Really. Something happened, and you should go to sleep anyways.
                 </div>
                 </body>
             </div>
@@ -42,14 +41,14 @@ export default function Person(): JSX.Element {
                 <link href={personData?.icon} rel="icon"/>
                 <meta property="og:title" content={personData?.who}/>
                 <meta property="og:image" content={personData?.icon}/>
-                <meta property="description" content={message?.message}/>
-                <meta property="og:description" content={message?.message}/>
+                <meta property="description" content={personData?.message}/>
+                <meta property="og:description" content={personData?.message}/>
             </Head>
             <div className="container grid grid-cols-1 place-items-center pb-10 m-12 mx-auto">
                 <div className="mb-4 text-4xl">{personData?.who}</div>
                 <img src={personData?.icon} alt="zzzzzzzz" className="mb-5 person-image"/>
                 <div>
-                    {message?.message}
+                    {personData?.message}
                 </div>
             </div>
         </div>
@@ -64,6 +63,11 @@ interface PersonData {
      * The person's name.
      */
     who: string,
+
+    /**
+     * A sleep message for the person.
+     */
+    message: string,
 
     /**
      * Person's icon, if applicable.
@@ -94,13 +98,4 @@ interface PersonRequest {
 function usePerson(person: PersonRequest): SWRResponse<PersonData, any> {
     // Cast as any to make my ide happy (????).
     return useSWR(`/api/person?email=${person.email}&name=${person.who}` as any);
-}
-
-/**
- * Use SWR to get sleep messages.
- * @param person    person to request a message for.
- */
-function useMessage(person: string): SWRResponse<{ message: string }, any> {
-    // Cast as any to make my ide happy (????).
-    return useSWR(`/api/message?name=${person}` as any);
 }
