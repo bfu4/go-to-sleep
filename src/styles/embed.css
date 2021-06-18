@@ -1,0 +1,31 @@
+.avatar-image {
+    width: 70px;
+    height: 70px;
+    vertical-align: baseline;
+}
+
+.avatar-image > img {
+    border-radius: 7px;
+}
+
+.discord-bl {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    min-width: 5px;
+}
+
+.fit {
+    width: max-content;
+}
+
+.embed {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    max-width: 80%;
+    width: max-content;
+}
+
+.wrap {
+    width: max-content;
+    height: max-content;
+}

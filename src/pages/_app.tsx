@@ -1,5 +1,6 @@
 import "../styles/globals.css"
 import "../styles/index.css"
+import "../styles/embed.css";
 import Head from "next/head";
 import {AppProps} from "next/app";
 

@@ -1,6 +1,15 @@
-
 * {
     transition: 0.3s ease-in-out;
+    overflow-x: hidden;
+}
+
+a {
+    color: #77d8ae
+}
+
+a:hover {
+    color: #60b18e;
+    font-weight: bolder;
 }
 
 .icon:hover {

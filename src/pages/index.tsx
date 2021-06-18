@@ -1,7 +1,9 @@
 import {GitHub} from "react-feather";
 import Link from 'next/link'
+import {DiscordEmbed} from "../components/discordEmbed";
 
 export default function Index(): JSX.Element {
+    const embedMeta = {title: "neemy", text: "neemy?! Why are you still awake?", image: "https://s.giggl.app/v1/users/233830203325935625/icons/45c3a6d2d4539a50ef2c4ec0eccf7477450a403f.jpg", color: "#77d8ae", backgroundColor: "#e7e7e7"};
     return (
         <div className="container self-center mx-auto text-center">
             <div className="grid grid-cols-1 place-items-center pb-10">
@@ -28,6 +30,8 @@ export default function Index(): JSX.Element {
                         discord)
                         to inform a person to go to sleep.
 
+                        <DiscordEmbed meta={embedMeta}/>
+
                         <div className="mt-6 mb-5">
                             To generate a page for a person, the end point is as such:
                             <div className="my-3">
@@ -39,7 +43,7 @@ export default function Index(): JSX.Element {
 
                         <div className="mb-5">
                             For example, if we want to tell myself to go to sleep, we can create a page with the
-                            following url:
+                            following <Link href="./for/bella.fusari@gmail.com/bella"><a>url</a></Link>:
                             <div className="my-3">
                                 <span className="p-2 code-block">
                                     its.sleeeepyti.me/for/bella.fusari@gmail.com/bella
@@ -49,7 +53,7 @@ export default function Index(): JSX.Element {
                         </div>
 
                         <div className="mb-5">
-                            If we don&apos;t want to use an email, we can use this url:
+                            If we don&apos;t want to use an email, we can use this <Link href="./for/-/bella"><a>url</a></Link>:
                             <div className="my-3">
                                 <span className="p-2 code-block">
                                     its.sleeeepyti.me/for/-/bella
