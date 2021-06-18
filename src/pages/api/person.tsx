@@ -2,6 +2,12 @@ import {NextApiRequest, NextApiResponse} from "next";
 import {createHash} from 'crypto';
 import fetch from "node-fetch";
 
+/**
+ * Request data for a person to tell them to sleep.
+ * @param req           req
+ * @param res           res
+ * @constructor
+ */
 export default async function PersonRequest(req: NextApiRequest, res: NextApiResponse) {
     if (!req.query.email || !req.query.name) {
         return res.status(422).json("Missing either an email or name.");

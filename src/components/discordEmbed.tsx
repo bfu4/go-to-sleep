@@ -1,3 +1,8 @@
+/**
+ * Discord embed
+ * @param props properties
+ * @constructor
+ */
 export function DiscordEmbed(props: { meta: EmbedMeta }): JSX.Element {
     return (
         <div className="container self-center m-3 mx-auto text-center fit">
@@ -22,6 +27,9 @@ export function DiscordEmbed(props: { meta: EmbedMeta }): JSX.Element {
     );
 }
 
+/**
+ * Defines structure of embed meta-data.
+ */
 interface EmbedMeta {
     title: string,
     text: string,
