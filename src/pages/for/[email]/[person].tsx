@@ -18,8 +18,8 @@ export default function Person({data}: InferGetServerSidePropsType<typeof getSer
                 <meta property="og:description" content={data.message}/>
             </Head>
             <div className="container grid grid-cols-1 grid-rows-3 place-items-center pb-10 m-12 mx-auto">
-                <div className="mb-4 text-4xl row-start-1" style={{height: "50%"}}>{data.who}</div>
-                <img src={data.icon} alt="zzzzzzzz" className="mb-5 person-image row-start-2"/>
+                <div className="row-start-1 mb-4 text-4xl" style={{height: "50%"}}>{data.who}</div>
+                <img src={data.icon} alt="zzzzzzzz" className="row-start-2 mb-5 person-image"/>
                 <div className="row-start-3">
                     {data.message}
                 </div>
