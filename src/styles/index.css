@@ -12,6 +12,10 @@ a:hover {
     font-weight: bolder;
 }
 
+a.icon {
+    color: black;
+}
+
 .icon:hover {
     color: #77d8ae;
 }
